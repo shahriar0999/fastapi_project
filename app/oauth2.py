@@ -3,8 +3,9 @@ from fastapi import status, HTTPException, Response, Depends
 from fastapi.security.oauth2 import OAuth2PasswordBearer
 import jwt
 from jwt.exceptions import InvalidTokenError
-import schemas
-from config import settings
+from .schemas import TokenData
+
+from app.config import settings
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
@@ -26,7 +27,7 @@ def verify_access_token(token: str, credentials_exception):
         id: str = payload.get("user_id")
         if id is None:
             raise credentials_exception
-        token_data = schemas.TokenData(id=id)
+        token_data = TokenData(id=id)
     except InvalidTokenError:
         raise credentials_exception
     return token_data

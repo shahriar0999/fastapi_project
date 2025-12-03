@@ -1,15 +1,10 @@
-import os
 import uvicorn
-from fastapi import FastAPI, status, HTTPException, Response, Depends
-import database
+from fastapi import FastAPI
 from sqlalchemy.orm import Session
-import models, schemas, utils, config
-from routers import chats, users, auth, vote
 
-
-
-# models.Base.metadata.create_all(bind=engine)
-
+from .database import engine
+from . import models, schemas, utils, config
+from .routers import chats, users, auth, vote
 
 app = FastAPI()
 
@@ -24,7 +19,5 @@ def root():
     return {"message": "Hello World!"}
 
 
-
-
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
