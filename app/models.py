@@ -1,0 +1,30 @@
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql.expression import text
+from sqlalchemy.sql.sqltypes import TIMESTAMP
+
+from app.database import Base
+
+class Chat(Base):
+    __tablename__ = "chats_orm"
+
+    id = Column(Integer, primary_key=True, nullable=False)
+    query = Column(String, nullable=False)
+    response = Column(String, nullable=False)
+    created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text(("now()")))
+    owner_id = Column(Integer, ForeignKey("users_orm.id", ondelete="CASCADE"), nullable=False)
+    owner = relationship("User")  # Establish relationship with User model
+
+class User(Base):
+    __tablename__ = "users_orm"
+
+    id = Column(Integer, primary_key=True, nullable=False)
+    email = Column(String, nullable=False, unique=True)
+    password = Column(String, nullable=False)
+    created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text(("now()")))
+
+class Vote(Base):
+    __tablename__ = "vote"
+    
+    user_id = Column(Integer, ForeignKey("users_orm.id", ondelete='CASCADE'), primary_key=True)
+    post_id = Column(Integer, ForeignKey("chats_orm.id", ondelete='CASCADE'), primary_key=True)
