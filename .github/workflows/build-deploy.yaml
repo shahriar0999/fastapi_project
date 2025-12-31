@@ -56,12 +56,11 @@ jobs:
 
 
   deploy:
-    name: Deploy to Production
+    deploy:
     runs-on: ubuntu-latest
-    needs: build
-    if: github.ref == 'refs/heads/main'
-    environment: production
-
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
     steps:
       - name: Deploy to AWS EC2
         uses: appleboy/ssh-action@v1.0.3
