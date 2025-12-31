@@ -56,7 +56,7 @@ jobs:
 
 
   deploy:
-    deploy:
+    name: Deploy to Production
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -65,9 +65,9 @@ jobs:
       - name: Deploy to AWS EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.PROD_HOST }}
+          host: ${{ secrets.PROD_HOST }}        # just IP, no http://
           username: ${{ secrets.PROD_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
+          key: ${{ secrets.EC2_SSH_KEY }}       # private key content
           port: 22
           script: |
             cd /app/src
