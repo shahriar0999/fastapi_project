@@ -5,7 +5,7 @@ import jwt
 from jwt.exceptions import InvalidTokenError
 from .schemas import TokenData
 
-from app.config import settings
+from fastapi_project.app.config import settings
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
