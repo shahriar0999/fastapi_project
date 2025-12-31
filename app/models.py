@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 
-from app.database import Base
+from fastapi_project.app.database import Base
 
 class Chat(Base):
     __tablename__ = "chats_orm"
