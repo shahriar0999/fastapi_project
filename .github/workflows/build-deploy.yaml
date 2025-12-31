@@ -65,13 +65,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Deploy to Ubuntu server
-  uses: appleboy/ssh-action@v1.0.3
-  with:
-    host: ${{ secrets.PROD_HOST }}
-    username: ${{ secrets.PROD_USERNAME }}
-    key: ${{ secrets.EC2_SSH_KEY }}   # Use the private key instead of password
-    port: 22
-    script: |
-      cd app/src
-      git pull
-      sudo systemctl restart api
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}   # Use the private key instead of password
+          port: 22
+          script: |
+            cd app/src
+            git pull
+            sudo systemctl restart api
