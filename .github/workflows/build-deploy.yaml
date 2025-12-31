@@ -61,7 +61,7 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-    steps:
+
       - name: Deploy to AWS EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
