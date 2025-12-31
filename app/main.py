@@ -7,9 +7,12 @@ from fastapi_project.app.database import engine
 from fastapi_project.app.routers import chats, users, auth, vote
 from fastapi_project.app.config import settings
 
-models.Base.metadata.create_all(bind=engine)
-
 app = FastAPI()
+
+
+@app.on_event("startup")
+def startup():
+    models.Base.metadata.create_all(bind=engine)
 
 app.include_router(chats.router)
 app.include_router(users.router)
