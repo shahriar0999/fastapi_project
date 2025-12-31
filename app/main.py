@@ -2,10 +2,10 @@ import uvicorn
 from fastapi import FastAPI
 from sqlalchemy.orm import Session
 
-# from database import engine
-from app.database import engine
-import models, schemas, utils, config
-from routers import chats, users, auth, vote
+from . import models
+from .database import engine
+from .routers import chats, users, auth, vote
+from .config import settings
 
 app = FastAPI()
 
