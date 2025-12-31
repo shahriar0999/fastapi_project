@@ -58,20 +58,17 @@ jobs:
   deploy:
     name: Deploy to Production
     runs-on: ubuntu-latest
+    needs: build
+    environment: testing
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Deploy to AWS EC2
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Execute remote SSH commands using password
+        uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.PROD_HOST }}        # just IP, no http://
+          host: ${{ secrets.PROD_HOST }}
           username: ${{ secrets.PROD_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}       # private key content
-          port: 22
-          script: |
-            cd /app/src
-            git pull origin main
-            source venv/bin/activate
-            pip install -r requirements.txt
-            sudo systemctl restart api
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: whoami
